@@ -1,0 +1,7 @@
+﻿{
+    "response":  {
+                     "servers":  [
+                                     "@{addr=51.79.37.206:2303; gameport=2302; steamid=90142806962213891; name=CodeFourGaming - King Of The Hill RHS Vics US #5; appid=107410; gamedir=Arma3; version=2.00.146773; product=Arma3; region=-1; players=89; max_players=99; bots=0; map=Altis; secure=False; dedicated=True; os=w; gametype=bt,r200,n0,s7,i3,mf,lf,vt,dt,tkoth,g65545,h304e8b7a,f0,c0-52,pw,e15,j0,k0,}"
+                                 ]
+                 }
+}
