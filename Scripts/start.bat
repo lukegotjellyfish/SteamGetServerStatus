@@ -1,3 +1,9 @@
+@ECHO OFF
+CLS
+
+CD /D E:\USBBACKUP\GitHub\SteamGetServerStatus\Scripts
+
+
 goto ServerStatus
 
 :ServerStatus
