@@ -66,28 +66,29 @@ for item in dataset:
 
 	if int(_dmy[0]) < 34:
 		_date = datetime.datetime(int(_dmy[2]), int(_dmy[1]), int(_dmy[0]),
-								int(_hms[0]), int(_hms[1]), _seconds)
+								  int(_hms[0]), int(_hms[1]), _seconds)
 	else:
 		_date = datetime.datetime(int(_dmy[0]), int(_dmy[1]), int(_dmy[2]),
-								int(_hms[0]), int(_hms[1]), _seconds)
+								  int(_hms[0]), int(_hms[1]), _seconds)
 
 
 	dayPlayerCount[_date.weekday()].append(item[2])
 	timePlayerCount[_date.hour].append(item[2])
 
 	_dateDayMonth = [_date.day, _date.month, _date.year]
-	print(_dateDayMonth)
+	#print(_dateDayMonth)
 
-input(dayAnalysis)
+
+print("\nTimezone UTC+0\n")
 
 _index = 0
 _days = ["   Monday","  Tuesday","Wednesday"," Thursday","   Friday"," Saturday","   Sunday"]
 for item in dayPlayerCount:
 	_weekDay = _days[_index]
-	print("Average players on a " + _weekDay + ": " + str(sum(item)/len(item)))
+	print("Average players on a " + _weekDay + ": " + str(sum(item)/len(item)) + " | Datapoints: " + str(len(item)))
 	_index += 1
 
-print("\n\n")
+print("")
 
 _index = 0
 for item in timePlayerCount:
@@ -95,6 +96,6 @@ for item in timePlayerCount:
 	if _index < 10:
 		indexStr = " " + indexStr
 	#print(str(item))
-	print("Average players at " + indexStr + ": " + str(sum(item)/len(item)))
+	print("Average players at " + indexStr + ": " + '{:.13f}'.format(sum(item)/len(item)) + " | Datapoints: " + str(len(item)))
 	_index += 1
 
