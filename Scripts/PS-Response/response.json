@@ -1,7 +1,8 @@
 {
   "response": {
     "servers": [
-      "@{addr=51.195.68.16:2303; gameport=2302; steamid=90150760200966148; name=CodeFourGaming - King Of The Hill Infantry EU #5 -24/7 Day; appid=107410; gamedir=Arma3; version=2.04.147719; product=Arma3; region=-1; players=90; max_players=100; bots=0; map=Altis; secure=False; dedicated=True; os=w; gametype=bt,r204,n0,s7,i3,mf,lf,vt,dt,tkoth,g65545,h934e9fb9,f0,c0-52,pw,e15,j0,k0,}"
+      "@{addr=51.79.37.206:2324; gameport=2323; steamid=90150703023089675; name=CodeFourGaming - King Of The Hill test server; appid=107410; gamedir=Arma3; version=2.04.147719; product=Arma3; region=-1; players=0; max_players=20; bots=0; map=Altis; secure=False; dedicated=True; os=w; gametype=bt,r204,n0,s7,i3,mf,lf,vt,dt,tkoth,g65545,h934e9fb9,f0,c0-52,pw,e15,j0,k0,}",
+      "@{addr=51.79.37.206:2303; gameport=2302; steamid=90150759570304011; name=CodeFourGaming - King Of The Hill RHS Vics US #5; appid=107410; gamedir=Arma3; version=2.04.147719; product=Arma3; region=-1; players=87; max_players=99; bots=0; map=Altis; secure=False; dedicated=True; os=w; gametype=bt,r204,n0,s7,i3,mf,lf,vt,dt,tkoth,g65545,h9ad82512,f0,c0-52,pw,e15,j0,k0,}"
     ]
   }
 }
