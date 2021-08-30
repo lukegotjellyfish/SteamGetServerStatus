@@ -39,6 +39,7 @@ with open("PS-Response\\response.json", "r", encoding="utf-8") as j:
 	gametype   = line[16].replace("gametype=","")
 
 	print(line)
+	print("Written: " + str([day, time[0:-7], players, maxPlayers, address]))
 	with open(csvName, "a", encoding='utf-8') as serverCsv:
 		csvreader = csv.writer(serverCsv, delimiter=',', lineterminator='\n')
 		csvreader.writerow([day, time[0:-7], players, maxPlayers, address])
