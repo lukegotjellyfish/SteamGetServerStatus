@@ -1,13 +1,13 @@
 @ECHO OFF
 CLS
 
-CD /D E:\USBBACKUP\GitHub\SteamGetServerStatus\Scripts
-
 
 goto ServerStatus
 
 :ServerStatus
-Powershell -executionpolicy remotesigned -File "QueryServer.ps1"
+Powershell -executionpolicy remotesigned -File "Query_EU3.ps1"
+call "FilterResponse.py"
+Powershell -executionpolicy remotesigned -File "Query_US5.ps1"
 call "FilterResponse.py"
 timeout /t 300
 goto ServerStatus

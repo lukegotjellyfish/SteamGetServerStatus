@@ -7,7 +7,7 @@ csvName="ServerWatch.csv"
 if not (os.path.isfile(csvName)):
 	with open(csvName, "a", encoding='utf-8') as serverCsv:
 		csvreader = csv.writer(serverCsv, delimiter=',', lineterminator='\n')
-		csvreader.writerow(["Date","Time","Players","Max Players"])
+		csvreader.writerow(["Date","Time","Players","Max Players","Address"])
 
 newFile=[]
 with open("PS-Response\\response.json", "r", encoding="utf-8") as j:
@@ -41,4 +41,4 @@ with open("PS-Response\\response.json", "r", encoding="utf-8") as j:
 	print(line)
 	with open(csvName, "a", encoding='utf-8') as serverCsv:
 		csvreader = csv.writer(serverCsv, delimiter=',', lineterminator='\n')
-		csvreader.writerow([day, time[0:-7], players, maxPlayers])
+		csvreader.writerow([day, time[0:-7], players, maxPlayers, address])
