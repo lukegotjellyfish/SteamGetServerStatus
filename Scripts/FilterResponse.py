@@ -10,7 +10,7 @@ if not (os.path.isfile(csvName)):
 		csvreader.writerow(["Date","Time","Players","Max Players","Address"])
 
 newFile=[]
-with open("PS-Response\\response.json", "r", encoding="utf-8") as j:
+with open("./PS-Response/response.json", "r", encoding="utf-8") as j:
 	lines = j.readlines()
 	#[1:]remove first character
 	line = lines[3].replace("; ","\n").replace("                  ","")
