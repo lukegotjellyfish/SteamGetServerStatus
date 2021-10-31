@@ -1,2 +1,2 @@
-call "DataSet.py"
+call "DataSet - pwsh.py"
 PAUSE
