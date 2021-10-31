@@ -85,7 +85,7 @@ _index = 0
 _days = ["   Monday","  Tuesday","Wednesday"," Thursday","   Friday"," Saturday","   Sunday"]
 for item in dayPlayerCount:
 	_weekDay = _days[_index]
-	print("Average players on a " + _weekDay + ": " + str(sum(item)/len(item)) + " | Datapoints: " + str(len(item)))
+	print("Average players on a " + _weekDay + ": " + '{:.13f}'.format(sum(item)/len(item)) + " | Datapoints: " + str(len(item)))
 	_index += 1
 
 print("")
