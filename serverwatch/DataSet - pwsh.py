@@ -40,6 +40,60 @@ class serverStats():
 			[],
 			[],
 			[],]
+		self.weekPlayerCount = [
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			]
 		
 	def addToDataset(self,value):
 		self.dataset.append(value)
@@ -67,18 +121,51 @@ class serverStats():
 
 			self.dayPlayerCount[_date.weekday()].append(item[2])
 			self.timePlayerCount[_date.hour].append(item[2])
+			self.weekPlayerCount[_date.isocalendar()[1]].append(item[2])
 	
 	def dayPlayerCountReport(self):
+		lastAvgPlayers = 0
 		for _index, item in enumerate(self.dayPlayerCount,start=0):
-			print("Average players on a " + self.days[_index] + ": " + '{:.13f}'.format(sum(item)/len(item)) + " | Datapoints: " + str(len(item)))
+			curAvgPlayers = sum(item)/len(item)
+			dayString = "Average players on a " + self.days[_index] + ": " + '{:.13f}'.format(curAvgPlayers) + " | Datapoints: " + str(len(item))
+			if lastAvgPlayers != 0:
+				print(dayString + " | Diff: " + str(curAvgPlayers-lastAvgPlayers))
+			else:
+				print(dayString)
+			lastAvgPlayers = curAvgPlayers
 	
 	def timePlayerCountReport(self):
+		lastAvgPlayers = 0
 		for _index,item in enumerate(self.timePlayerCount,start=0):
 			indexStr = str(_index)
 			if _index < 10:
 				indexStr = " " + indexStr
-			print("Average players at " + indexStr + ": " + '{:.13f}'.format(sum(item)/len(item)) + " | Datapoints: " + str(len(item)))
+		
+			curAvgPlayers = sum(item)/len(item)
+			hourString = "Average players at " + indexStr + ": " + '{:.13f}'.format(sum(item)/len(item)) + " | Datapoints: " + str(len(item))
+			if lastAvgPlayers != 0:
+				print(hourString + " | Diff: " + str(curAvgPlayers-lastAvgPlayers))
+			else:
+				print(hourString)
+			lastAvgPlayers=curAvgPlayers
 	
+	def weekPlayerCountReport(self):
+		lastAvgPlayers = 0
+		for _index,item in enumerate(self.weekPlayerCount,start=0):
+			indexStr = str(_index)
+			if _index < 10:
+				indexStr = " " + indexStr
+	
+			datapoints = len(item)
+			if datapoints > 0:
+				curAvgPlayers = sum(item)/len(item)
+				weekString = "Average players on week " + indexStr + ": " + '{:.13f}'.format(curAvgPlayers).zfill(2) + " | Datapoints: " + str(datapoints)
+				if lastAvgPlayers != 0:
+					print(weekString + " | Diff: " + str(curAvgPlayers-lastAvgPlayers))
+				else:
+					print(weekString)
+				lastAvgPlayers=curAvgPlayers
+			
 
 usFive = serverStats("51.79.37.206:2303")
 euThree = serverStats("135.125.140.176:2303")
@@ -101,15 +188,20 @@ usFive.addToPlayerCount()
 euThree.addToPlayerCount()
 
 
-print("\nTimezone UTC+1")
+print("\nTimezone UTC+0")
 print("From " + str(usFive.dataset[0][0]) + " " + str(usFive.dataset[0][1]) + " to " + str(usFive.dataset[-1][0]) + " " + str(usFive.dataset[-1][1]) + "\n")
 usFive.dayPlayerCountReport()
 print("")
 usFive.timePlayerCountReport()
+print("")
+usFive.weekPlayerCountReport()
 
 
-# print("\nTimezone UTC+1")
+
+# print("\nTimezone UTC+0")
 # print("From " + str(euThree.dataset[0][0]) + " " + str(euThree.dataset[0][1]) + " to " + str(euThree.dataset[-1][0]) + " " + str(euThree.dataset[-1][1]) + "\n")
 # euThree.dayPlayerCountReport()
 # print("")
 # euThree.timePlayerCountReport()
+# print("")
+# euThree.weekPlayerCountReport()
