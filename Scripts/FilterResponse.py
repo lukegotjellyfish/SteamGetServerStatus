@@ -2,7 +2,7 @@ import csv
 import os.path
 from datetime import datetime
 
-csvName="ServerWatch.csv"
+csvName="ServerWatch_" + str(datetime.today().year) + ".csv"
 
 if not (os.path.isfile(csvName)):
 	with open(csvName, "a", encoding='utf-8') as serverCsv:

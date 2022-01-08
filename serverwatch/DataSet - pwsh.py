@@ -93,6 +93,7 @@ class serverStats():
 			[],
 			[],
 			[],
+			[],
 			]
 		
 	def addToDataset(self,value):
@@ -117,7 +118,6 @@ class serverStats():
 			else:
 				_date = datetime.datetime(int(_dmy[0]), int(_dmy[1]), int(_dmy[2]),
 										  int(_hms[0]), int(_hms[1]), _seconds)
-
 
 			self.dayPlayerCount[_date.weekday()].append(item[2])
 			self.timePlayerCount[_date.hour].append(item[2])
@@ -188,7 +188,8 @@ usFive.addToPlayerCount()
 euThree.addToPlayerCount()
 
 
-print("\nTimezone UTC+0")
+print("US5 Server Stats")
+print("Timezone UTC+0")
 print("From " + str(usFive.dataset[0][0]) + " " + str(usFive.dataset[0][1]) + " to " + str(usFive.dataset[-1][0]) + " " + str(usFive.dataset[-1][1]) + "\n")
 usFive.dayPlayerCountReport()
 print("")
@@ -197,11 +198,14 @@ print("")
 usFive.weekPlayerCountReport()
 
 
+print("\n\n\n")
 
-# print("\nTimezone UTC+0")
-# print("From " + str(euThree.dataset[0][0]) + " " + str(euThree.dataset[0][1]) + " to " + str(euThree.dataset[-1][0]) + " " + str(euThree.dataset[-1][1]) + "\n")
-# euThree.dayPlayerCountReport()
-# print("")
-# euThree.timePlayerCountReport()
-# print("")
-# euThree.weekPlayerCountReport()
+
+print("EU3 Server Stats")
+print("Timezone UTC+0")
+print("From " + str(euThree.dataset[0][0]) + " " + str(euThree.dataset[0][1]) + " to " + str(euThree.dataset[-1][0]) + " " + str(euThree.dataset[-1][1]) + "\n")
+euThree.dayPlayerCountReport()
+print("")
+euThree.timePlayerCountReport()
+print("")
+euThree.weekPlayerCountReport()
