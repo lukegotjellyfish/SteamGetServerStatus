@@ -121,8 +121,13 @@ class serverStats():
 
 			self.dayPlayerCount[_date.weekday()].append(item[2])
 			self.timePlayerCount[_date.hour].append(item[2])
-			self.weekPlayerCount[_date.isocalendar()[1]].append(item[2])
-	
+			if _date.isocalendar()[1] == 52:
+				if _date.month == 1:
+					self.weekPlayerCount[0].append(item[2])
+				else: 
+					self.weekPlayerCount[_date.isocalendar()[1]].append(item[2])
+			else:
+				self.weekPlayerCount[_date.isocalendar()[1]].append(item[2])
 	def dayPlayerCountReport(self):
 		lastAvgPlayers = 0
 		for _index, item in enumerate(self.dayPlayerCount,start=0):
@@ -152,7 +157,7 @@ class serverStats():
 	def weekPlayerCountReport(self):
 		lastAvgPlayers = 0
 		for _index,item in enumerate(self.weekPlayerCount,start=0):
-			indexStr = str(_index)
+			indexStr = str(_index+1)
 			if _index < 10:
 				indexStr = " " + indexStr
 	
@@ -172,7 +177,7 @@ euThree = serverStats("135.125.140.176:2303")
 
 csvFile = pandas.read_csv("ServerWatch.csv")
 dates = csvFile["Date"]
-times = csvFile["Time"]
+times = csvFile["Time"]	
 players = csvFile["Players"]
 address = csvFile["Address"]
 
