@@ -1,6 +1,6 @@
 from functools import reduce
-
 import pandas as pd
+
 
 df = reduce(
     lambda df_i, df_j: pd.concat([df_i, df_j]).drop_duplicates(subset=["Date", "Time"]),
