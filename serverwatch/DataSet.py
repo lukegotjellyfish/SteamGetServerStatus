@@ -4,6 +4,7 @@ import datetime
 
 class serverStats():
 	days = ["   Monday","  Tuesday","Wednesday"," Thursday","   Friday"," Saturday","   Sunday"]
+	dayPlayerCountReportLength = 14
 
 	def __init__(self,_address):
 		self.address = _address
@@ -130,7 +131,7 @@ class serverStats():
 			else:
 				self.weekPlayerCount[_date.isocalendar()[1]][_date.weekday()].append(item[2])
 
-	def weekdayPlayerCount(self):
+	def weekdayPlayerCountReport(self):
 		lastAvgPlayers = 0
 		for _index, item in enumerate(self.weekdayPlayerCountList,start=0):
 			curAvgPlayers = sum(item)/len(item)
@@ -156,36 +157,36 @@ class serverStats():
 				print(hourString)
 			lastAvgPlayers=curAvgPlayers
 	
-	def dayPlayerCount(self):
+	def dayPlayerCountReport(self):
 		lastAvgPlayers = 0
-		
 		weekNum = 0
 		dayNum = 0
-		for _index,item in enumerate(self.weekPlayerCount,start=0):
+		dayReport = []
+
+		for _index, week in enumerate(self.weekPlayerCount,start=0):
 			indexStr = str(_index+1)
 			if _index < 9:
 				indexStr = " " + indexStr
 	
 			dayNum = weekNum
-			if len(item) > 0:
-				#item = [monday,tuesday,wednesday,thursday,friday,saturday,sunday]
-				for __index, _item in enumerate(item,start=0):
+			if len(week) > 0:
+				#week = [monday,tuesday,wednesday,thursday,friday,saturday,sunday]
+				for __index, _item in enumerate(week,start=0):
 					if len(_item) > 0:
 						curAvgPlayers = sum(_item)/len(_item)
-						dayString = "Average players on day " + str(dayNum) + ": " + '{:.13f}'.format(curAvgPlayers) + " | Datapoints: " + str(len(_item))
-						print(dayString + " | Diff: " + str(curAvgPlayers-lastAvgPlayers))
-						#print(f"dayNum = {dayNum}|_index = {_index}|__index = {__index}")
+						dayString = f"Average players on day {str(dayNum)}: {'{:.13f}'.format(curAvgPlayers)} | Datapoints: {str(len(_item))}"
+						dayReport.append(f"{dayString} | Diff: {str(curAvgPlayers-lastAvgPlayers)}")
+						# print(dayString + " | Diff: " + str(curAvgPlayers-lastAvgPlayers))
+						# print(f"dayNum = {dayNum}|_index = {_index}|__index = {__index}")
 						lastAvgPlayers = curAvgPlayers
 					dayNum += 1
 			weekNum += 7
 
-			curAvgPlayers = sum(item)/len(item)
-			hourString = "Average players at " + indexStr + ": " + '{:.13f}'.format(sum(item)/len(item)) + " | Datapoints: " + str(len(item))
-			if lastAvgPlayers != 0:
-				print(hourString + " | Diff: " + str(curAvgPlayers-lastAvgPlayers))
-			else:
-				print(hourString)
-			lastAvgPlayers=curAvgPlayers
+		# Output day report
+		if self.dayPlayerCountReportLength != 0:
+			print("Average players on day...")
+		for day in dayReport[-self.dayPlayerCountReportLength:]:
+			print(day)
 
 	def weekPlayerCountReport(self):
 		lastAvgPlayers = 0
@@ -213,7 +214,10 @@ class serverStats():
 			
 
 usFive = serverStats("51.79.37.206:2303")
+usFive.dayPlayerCountReportLength = 14  # default = 14
 euThree = serverStats("135.125.140.176:2303")
+euThree.dayPlayerCountReportLength = 14  # default = 14
+
 
 csvFile = pandas.read_csv("ServerWatch_2022.csv")
 dates = csvFile["Date"]
@@ -227,7 +231,7 @@ for x, date in enumerate(dates, start=0):
 			usFive.addToDataset([date, times[x], players[x], address[x]])
 		else:
 			euThree.addToDataset([date, times[x], players[x], address[x]])
-	#print([date, times[x], players[x]])
+	# print([date, times[x], players[x]])
 
 usFive.addToPlayerCount()
 euThree.addToPlayerCount()
@@ -236,22 +240,19 @@ euThree.addToPlayerCount()
 print("US5 Server Stats")
 print("Timezone UTC+0")
 print("From " + str(usFive.dataset[0][0]) + " " + str(usFive.dataset[0][1]) + " to " + str(usFive.dataset[-1][0]) + " " + str(usFive.dataset[-1][1]) + "\n")
-usFive.weekdayPlayerCount()
+usFive.weekdayPlayerCountReport()
 print("")
 usFive.timePlayerCountReport()
 print("")
 usFive.weekPlayerCountReport()
 print("")
-#usFive.dayPlayerCount()
-
+usFive.dayPlayerCountReport()
 
 print("\n\n\n")
-
-
 print("EU3 Server Stats")
 print("Timezone UTC+0")
 print("From " + str(euThree.dataset[0][0]) + " " + str(euThree.dataset[0][1]) + " to " + str(euThree.dataset[-1][0]) + " " + str(euThree.dataset[-1][1]) + "\n")
-euThree.weekdayPlayerCount()
+euThree.weekdayPlayerCountReport()
 print("")
 euThree.timePlayerCountReport()
 print("")
