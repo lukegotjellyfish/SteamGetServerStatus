@@ -1,10 +1,18 @@
 import pandas
 import datetime
+from colorama import init, Fore, Style
+init()
 
 
 class serverStats():
 	days = ["   Monday","  Tuesday","Wednesday"," Thursday","   Friday"," Saturday","   Sunday"]
 	dayPlayerCountReportLength = 14
+	dayPlayerCountReportColour = Fore.LIGHTRED_EX 
+	weekPlayerCountReportColour = Fore.LIGHTRED_EX
+	timePlayerCountReportColour = Fore.LIGHTRED_EX
+	weekdayPlayerCountReportColour = Fore.LIGHTRED_EX
+	datapointsColour = Fore.BLUE
+	diffColour = Fore.MAGENTA
 
 	def __init__(self,_address):
 		self.address = _address
@@ -135,9 +143,9 @@ class serverStats():
 		lastAvgPlayers = 0
 		for _index, item in enumerate(self.weekdayPlayerCountList,start=0):
 			curAvgPlayers = sum(item)/len(item)
-			dayString = "Average players on a " + self.days[_index] + ": " + '{:.13f}'.format(curAvgPlayers) + " | Datapoints: " + str(len(item))
+			dayString = f"{self.weekdayPlayerCountReportColour}Average players on a {self.days[_index]}: {(sum(item)/len(item)):05.2f} {self.datapointsColour}| Datapoints: {len(item):,}{Fore.WHITE}"
 			if lastAvgPlayers != 0:
-				print(dayString + " | Diff: " + str(curAvgPlayers-lastAvgPlayers))
+				print(f"{dayString} {self.diffColour}| Diff: {str(curAvgPlayers-lastAvgPlayers)}{Fore.WHITE}")
 			else:
 				print(dayString)
 			lastAvgPlayers = curAvgPlayers
@@ -145,18 +153,34 @@ class serverStats():
 	def timePlayerCountReport(self):
 		lastAvgPlayers = 0
 		for _index,item in enumerate(self.timePlayerCount,start=0):
-			indexStr = str(_index)
-			if _index < 10:
-				indexStr = " " + indexStr
-		
 			curAvgPlayers = sum(item)/len(item)
-			hourString = "Average players at " + indexStr + ": " + '{:.13f}'.format(sum(item)/len(item)) + " | Datapoints: " + str(len(item))
+			hourString = f"{self.timePlayerCountReportColour}Average players at {_index:02}: {curAvgPlayers:05.2f} {self.datapointsColour}| Datapoints: {len(item):,}{Fore.WHITE}"
 			if lastAvgPlayers != 0:
-				print(hourString + " | Diff: " + str(curAvgPlayers-lastAvgPlayers))
+				print(f"{hourString} {self.diffColour}| Diff: {curAvgPlayers-lastAvgPlayers}{Fore.WHITE}")
 			else:
 				print(hourString)
-			lastAvgPlayers=curAvgPlayers
+			lastAvgPlayers = curAvgPlayers
+
+	def weekPlayerCountReport(self):
+		lastAvgPlayers = 0
+		for _index,item in enumerate(self.weekPlayerCount,start=0):
+			#Overwrite for a lazyfix to new weekPlayerCount structure
+			newItem = []
+			for day in item:
+				for dayValue in day:
+					newItem.append(dayValue)
+			item = newItem
 	
+			datapoints = len(item)
+			if datapoints > 0:
+				curAvgPlayers = sum(item)/len(item)
+				weekString = f"{self.weekPlayerCountReportColour}Average players on week {_index+1:02}: {curAvgPlayers:05.2f} {self.datapointsColour}| Datapoints: {datapoints:,}{Fore.WHITE}"
+				if lastAvgPlayers != 0:
+					print(f"{weekString} {self.diffColour}| Diff: {curAvgPlayers-lastAvgPlayers}{Fore.WHITE}")
+				else:
+					print(weekString)
+				lastAvgPlayers=curAvgPlayers
+
 	def dayPlayerCountReport(self):
 		lastAvgPlayers = 0
 		weekNum = 0
@@ -174,8 +198,8 @@ class serverStats():
 				for __index, _item in enumerate(week,start=0):
 					if len(_item) > 0:
 						curAvgPlayers = sum(_item)/len(_item)
-						dayString = f"Average players on day {str(dayNum)}: {'{:.13f}'.format(curAvgPlayers)} | Datapoints: {str(len(_item))}"
-						dayReport.append(f"{dayString} | Diff: {str(curAvgPlayers-lastAvgPlayers)}")
+						dayString = f"{self.dayPlayerCountReportColour}Average players on day {dayNum:03}: {curAvgPlayers:05.2f} {self.datapointsColour}| Datapoints: {len(_item)}"
+						dayReport.append(f"{dayString} {self.diffColour}| Diff: {curAvgPlayers-lastAvgPlayers}{Fore.WHITE}")
 						# print(dayString + " | Diff: " + str(curAvgPlayers-lastAvgPlayers))
 						# print(f"dayNum = {dayNum}|_index = {_index}|__index = {__index}")
 						lastAvgPlayers = curAvgPlayers
@@ -184,34 +208,10 @@ class serverStats():
 
 		# Output day report
 		if self.dayPlayerCountReportLength != 0:
-			print("Average players on day...")
+			print(f"Average players per day for the last {self.dayPlayerCountReportLength} days")
 		for day in dayReport[-self.dayPlayerCountReportLength:]:
 			print(day)
 
-	def weekPlayerCountReport(self):
-		lastAvgPlayers = 0
-		for _index,item in enumerate(self.weekPlayerCount,start=0):
-			#Overwrite for a lazyfix to new weekPlayerCount structure
-			newItem = []
-			for day in item:
-				for dayValue in day:
-					newItem.append(dayValue)
-			item = newItem
-	
-			indexStr = str(_index+1)
-			if _index < 9:
-				indexStr = " " + indexStr
-	
-			datapoints = len(item)
-			if datapoints > 0:
-				curAvgPlayers = sum(item)/len(item)
-				weekString = "Average players on week " + indexStr + ": " + '{:.13f}'.format(curAvgPlayers).zfill(2) + " | Datapoints: " + str(datapoints)
-				if lastAvgPlayers != 0:
-					print(weekString + " | Diff: " + str(curAvgPlayers-lastAvgPlayers))
-				else:
-					print(weekString)
-				lastAvgPlayers=curAvgPlayers
-			
 
 usFive = serverStats("51.79.37.206:2303")
 usFive.dayPlayerCountReportLength = 14  # default = 14
